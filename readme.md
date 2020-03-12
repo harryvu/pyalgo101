@@ -16,6 +16,9 @@ The above command will create new folder named algoenv for your virtual environm
 PS D:\Repos\pyalgo101> algoenv/scripts/activate
 (algoenv) PS D:\Repos\pyalgo101>
 
+macbook-pro:pyalgo101 harryvu$ source algoenv/bin/activate
+(algoenv) macbook-pro:pyalgo101 harryvu$
+
 Notice the (algoenv) prefix indicated that it is activated
 
 - deactivate
