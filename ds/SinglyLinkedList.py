@@ -78,6 +78,11 @@ class SinglyLinkedList:
         prev.next = node_tobe_deleted.next
         # point the node_tobe_deleted to None
         node_tobe_deleted.next = None
+        # then free
+        node_tobe_deleted = None
+        # if you want to totally delete the variable use del
+        # del node_tobe_deleted
+        # https://andreasbergstrom.com/posts/python-del-vs-assign-none/
 
         # decrease node count by one
         self.count -= 1
