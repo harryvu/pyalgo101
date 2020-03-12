@@ -47,9 +47,41 @@ class SinglyLinkedList:
 
             current = current.next
 
+    def _find_prev(self,data):
+        """Find the node before (previous)."""
+        
+        # set the stage
+        previous = None
+        current = self.head
 
+        # iterate through the list
+        while current:
+            # if found then return the previous node
+            if current.data == data:
+                return previous
             
+            # set the previous to current node
+            # then move the current to the next node
+            previous = current
+            current = current.next
 
+        # could not find the node, so return None
+        return None
+
+    def delete(self, data):
+        """Delete a node by its value."""
+
+        prev = self._find_prev(data)
+        node_tobe_deleted = prev.next
+
+        # point the prev node to the node after the node_tobe_deleted
+        prev.next = node_tobe_deleted.next
+        # point the node_tobe_deleted to None
+        node_tobe_deleted.next = None
+
+        # decrease node count by one
+        self.count -= 1
+    
     def iter(self):
         """Iterate through the list"""
         current = self.head
