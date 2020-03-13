@@ -16,6 +16,8 @@ class Solution(object):
         :type nums: List[int]
         :type target: int
         :rtype: List[int]
+        :time: O(n^2)
+        :space: O(n)
         """
 
         for i, ival in enumerate(nums):
@@ -25,7 +27,10 @@ class Solution(object):
         
 
     def twoSum_hashtable_2_pass(self, nums, target):
-        
+        """
+        :time: O(n)
+        :space: O(n)
+        """
         # build the hash table for look up later
         my_hashtable = {}
         for i, ival in enumerate(nums):
