@@ -37,8 +37,31 @@ class Solution(object):
                 for p in self.permute(newNums):
                     answers.append([lst[i]] + p)
             return answers
-        
 
-nums = list('123456')
+    def permute2(self, lst):
+        """
+        :type nums: List[int]
+        :rtype: generator[List[int]]
+        """
+
+        if len(lst) == 0:
+            # base case
+            yield []
+        elif len(lst) == 1:
+            # base case
+            yield [lst]
+        else:
+            # recursive case
+            answers = []
+            for i in range(len(lst)):
+                # create new list call newNums that have the same elements except the ith-element
+                newNums = lst[:i] + lst[i+1:]
+                for p in self.permute(newNums):
+                    yield [lst[i]] + p
+
+nums = list('123')
 sol = Solution()
 print(sol.permute(nums))
+
+for i in sol.permute2(nums):
+    print(i)
