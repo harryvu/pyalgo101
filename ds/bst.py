@@ -5,13 +5,17 @@ class BSTNode:
         self.value = key
 
 class BST:
-    def __init__(self, node):
-        self.root = node
+    def __init__(self):
+        self.root = None
     
-    def insert(self, node):
-        self._insert(self.root, node)
+    def insert(self, key):
+        self._insert(self.root, key)
 
-    def _insert(self, atNode, newNode):
+    def _insert(self, atNode, newKey):
+        newNode = BSTNode(newKey)
+
+        if self.root is None:
+            self.root = newNode
         if atNode is None:
             atNode = newNode
         else:
@@ -19,12 +23,12 @@ class BST:
                 if atNode.right is None:
                     atNode.right = newNode
                 else:
-                    self._insert(atNode.right, newNode)
+                    self._insert(atNode.right, newKey)
             else:
                 if atNode.left is None:
                     atNode.left = newNode
                 else:
-                    self._insert(atNode.left, newNode)
+                    self._insert(atNode.left, newKey)
     
     # DFS traversals
 
