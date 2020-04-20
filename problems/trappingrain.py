@@ -4,8 +4,7 @@ def trap(heights):
     right = 0
     total = 0
 
-    for i in range(len(heights)):
-        if i > 0:
+    for i in range(1,len(heights)):
             left.append(max(left[i-1],heights[i-1]))
 
     j = len(heights) - 2
