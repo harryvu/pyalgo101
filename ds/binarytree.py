@@ -42,6 +42,8 @@ class BinaryNode:
         self.levelorder = ""
 
     def traverse_preorder(self):
+        """NLR"""
+        
         result = self.name
         if (self.leftchild != None):
             result += " " + self.leftchild.traverse_preorder()
