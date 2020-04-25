@@ -72,12 +72,12 @@ class MinHeap:
     def remove(self):
         pass
 
-    def _is_leaf(self, pos):
-        parent_pos = (pos - 1) / 2
-        left_pos = 2 * pos + 1
-        right_pos = 2 * pos + 2
+    # def _is_leaf(self, pos):
+    #     parent_pos = (pos - 1) / 2
+    #     left_pos = 2 * pos + 1
+    #     right_pos = 2 * pos + 2
 
-        if pos > 0:
+    #     if pos > 0:
             
             
 

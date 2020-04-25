@@ -69,3 +69,6 @@ class BinaryNode:
                 self.queue.enqueue(dnode.data.rightchild)
         
         return result
+
+    def find_node(self, key):
+        pass
