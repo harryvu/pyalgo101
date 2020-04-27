@@ -3,11 +3,13 @@ class Node:
         self.key = key
         self.left = None
         self.right = None
+        self.parent = None
 
 class BinaryTree:
     def __init__(self, node):
         self.root = node
-        self.queue = Queue()
+        self.pq = Queue()
+        self.seen = [] # save processed nodes here
 
     def traverse_preorder(self, node):
         """order: N-L-R"""
@@ -52,21 +54,21 @@ class BinaryTree:
         if node == None:
             return None
         else:
-            self.queue.enqueue(node)
+            self.pq.enqueue(node)
 
         result = []
-        while not self.queue.isEmpty():
+        while not self.pq.isEmpty():
             # dequeue a node then process each node
-            dnode = self.queue.dequeue()
+            dnode = self.pq.dequeue()
             result.append(dnode.key.key)
 
             if dnode.key.left != None:
                 # enqueue the left node for later processing
-                self.queue.enqueue(dnode.key.left)
+                self.pq.enqueue(dnode.key.left)
             
             if dnode.key.right != None:
                 # enqueue the right node for later processing
-                self.queue.enqueue(dnode.key.right)
+                self.pq.enqueue(dnode.key.right)
 
         return result
 
@@ -89,6 +91,47 @@ class BinaryTree:
             if node.right != None:
                 return self.find_node(node.right, key)
         return result
+
+    def find_nodes_at_distance(self, node, k, stopAt):
+        """
+        find node at k distance from a specified node
+        both down/up the tree
+        """
+
+        class Bucket:
+            """
+            This Bucket will be used as a container
+            to put node + the step in the same bucket
+            before enqueue to a processing queue (pq)
+            """
+            def __init__(self, node, step):
+                self.node = node
+                self.step = step
+
+        results = [] # save all results here, starts with an empty list
+        #k is the number of steps from the specified node
+        if k == 0 and node != None:
+            # we are at the start node
+            self.pq.clear()
+            self.seen.clear()
+            self.pq.enqueue(Bucket(node,0))
+
+        while not self.pq.isEmpty():
+            bucket = self.pq.dequeue()
+            self.seen.append(bucket.key.node.key)
+            step = bucket.key.step
+            
+            if step < stopAt:
+                if (bucket.key.node.left != None) and (bucket.key.node.left.key not in self.seen):
+                    self.pq.enqueue(Bucket(bucket.key.node.left,step+1))
+                if (bucket.key.node.right != None) and (bucket.key.node.right.key not in self.seen):
+                    self.pq.enqueue(Bucket(bucket.key.node.right,step+1))
+                if (bucket.key.node.parent != None) and (bucket.key.node.parent.key not in self.seen):
+                    self.pq.enqueue(Bucket(bucket.key.node.parent,step+1))
+            if step == stopAt:
+                results.append(bucket.key.node.key)
+
+        return results    
 
 class Queue:        
     """
@@ -134,6 +177,9 @@ class Queue:
 
         return temp
     
+    def clear(self):
+        self.front = self.rear = None
+
 
 # Driver code
 one = Node("One")
@@ -142,12 +188,33 @@ three = Node("Three")
 four = Node("Four")
 five = Node("Five")
 six = Node("Six")
+seven = Node('Seven')
+nine = Node('Nine')
 
+#one.parent == None
 one.left = two
 one.right = three
+
+two.parent = one
 two.left = four
 two.right = five
+
+three.parent = one
 three.left = six
+
+four.parent = two
+
+five.parent = two
+five.left = seven
+
+seven.parent = five
+seven.left = nine
+
+nine.parent = seven
+
+six.parent = three
+
+
 
 my_tree = BinaryTree(one)
 print("\npre-order:")
@@ -172,3 +239,6 @@ n2 = my_tree.find_node(one, "Two")
 print("\nlevel-order from node Two:")
 lorder = my_tree.traverse_levelorder(n2)
 print(lorder)
+
+print('find_node_at_distance(two,0,1):')
+print(my_tree.find_node_at_distance(two,0,3))
